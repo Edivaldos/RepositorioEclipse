@@ -9,6 +9,9 @@ public class Elemento {
 		this.valor = valor;
 	}
 	
+	public Elemento() {
+	}
+
 	public void setValor(int valor){
 		this.valor = valor;
 	}
