@@ -185,53 +185,77 @@ public class No {
 	public No remover(Elemento elem){
 		//Para iniciar o processo de remoção, verificamos se o nó atual é igual ao elemento a ser removido; começamos desde a raiz da árvore:
 		if(this.ele.getValor() == elem.getValor()){
+			
 			//1º CASO - O elemento não tem filhos, nem à direita, nem à esquerda, ou seja, é um nó folha. Caso mais simples.
 			//verificação
 			if(this.noDireito == null && this.noEsquerdo == null){
-				System.out.println("1º CASO DE REMOÇÃO...");
-				System.out.println("------------------------> Elemento " + elem.getValor() + " removido!");
-				return null;//porque o nó é folha.
+				System.out.println("ACIONADO 1º CASO DE REMOÇÃO...");
+				System.out.println("------------------------> Elemento " + elem.getValor() + " removido!\n");
+				return null;//remove o elemento setando-o como nulo, porque o nó é folha.
 			}
 			else{
 				//2º Caso - O nó a ser removido tem filho à esquerda e não tem filho à direita. Caso menos complexo.
-				if(this.noEsquerdo != null && this.noDireito == null){//verificação
-					System.out.println("2º CASO DE REMOÇÃO...");
-					System.out.println("------------------------> Elemento " + elem.getValor() + " removido!");
-				return this.noEsquerdo;//Retorno a sub-arvore da esquerda; porque à direita não tem elemento. Religação
+				//verificação
+				if(this.noEsquerdo != null && this.noDireito == null){
+					System.out.println("ACINADO 2º CASO DE REMOÇÃO...");
+					System.out.println("------------------------> Elemento " + elem.getValor() + " removido!\n");
+					//Retorno a sub-arvore da esquerda; porque à direita não tem elemento. 
+					return this.noEsquerdo;//Essa é a Religação
 				}
+				
 				//3º Caso - O nó a ser removido tem filho à direita e não tem filho à esquerda. Caso menos complexo.
-				else if(this.noDireito != null && this.noEsquerdo == null){//verificação
-					System.out.println("3º CASO DE REMOÇÃO...");
-					System.out.println("------------------------> Elemento " + elem.getValor() + " removido!");
-				return this.noDireito;//Retorno a sub-arvore da direita; porque à esquerda não tem elemento.	
+				//verificação
+				else if(this.noDireito != null && this.noEsquerdo == null){
+					System.out.println("ACIONADO 3º CASO DE REMOÇÃO...");
+					System.out.println("------------------------> Elemento " + elem.getValor() + " removido!\n");
+					//Retorno a sub-arvore da direita; porque à esquerda não tem elemento.
+					return this.noDireito;//Essa é a Religação	
 				}
-				//4º Caso - O nó a ser removido tem filhos dos dois lados (esquerdo e direito). Caso complexo.
+				
+				//4º Caso - O nó a ser removido tem filhos dos dois lados (esquerdo e direito). Caso complexo. (Verificar observações no fim da classe)
 				else{//Adotando a estratégia de pegar o MAIOR dentre os Menores elementos da árvore:
-					No substituto = this.noEsquerdo;
+					
+					//Crio o nó auxiliar e seto com o nó à esquerda do nó a ser removido.
+					No substituto = this.noEsquerdo;//Para pegar o Maior dentre os Menores
 					while(substituto.noDireito != null){//enquanto houver descendência à direita...
-						substituto = substituto.noDireito;
+						substituto = substituto.noDireito;//Procurando o Maior elemento à direita.
 					}
-					//efetuando a troca dos elementos da árvore...
+					//Encontrei o MAIOR dentre os Menores, então efetuando a troca dos elementos da árvore...
 					this.ele = substituto.getEle();//o nó atual recebe o elemento do substituto (o MAIOR dentre so Menores)
-					substituto.setEle(elem);	//Insiro no nó folha o elemento a ser removido...
-					//...Então faço a remoção:
-					System.out.println("4º CASO DE REMOÇÃO...");
+					substituto.setEle(elem);	//Seto o nó substituto com o elemento a ser removido...
+					
+					System.out.println("ACIONADO 4º CASO DE REMOÇÃO...");
 					System.out.println("--> Efetuando a mudança do 4º caso para o 1º ou para o 2º caso...");
-					this.noEsquerdo = noEsquerdo.remover(elem);//Mudança do 4º caso para o 1º ou para o 2º caso.
+					//Então seto o nó esquerdo chamando o remover a partir da sub-arvore da esquerda:
+					this.noEsquerdo = noEsquerdo.remover(elem);//Até chegar no nó a remover.
+					//...Então serei redirecionado para outro caso de remoção:
+					//Reiniciada a verificação, ocorrerá a mudança do 4º caso para o 1º ou para o 2º caso.
 				}
 			}
 		}
 		else if(elem.getValor() < this.ele.getValor()){
-			//Se o elemento a ser removido for menor que o elemento atual, então chamo o remover passando a sub-arvore da esquerda:
-			//Refaz a ligação da aresta
-			this.noEsquerdo = this.noEsquerdo.remover(elem);//remove o elemento e remonta a sub-arvore.
+			//Se o elemento a ser removido for menor que o elemento atual;
+			//Então seto o nó esquerdo chamando o remover a partir da sub-arvore da esquerda:
+			if(this.noEsquerdo != null){//Verifica se o nó esquerdo não é nulo.
+				this.noEsquerdo = this.noEsquerdo.remover(elem);//Até chegar no nó a remover.
+			}
+			else{//Caso seja nulo é porque o elemento a ser removido não existe na árvore (porque ele deveria estar neste lugar nulo).
+			System.out.println("\n--> O elemento " + elem.getValor() + " não existe na árvore! Impossível remover!");
+			return this;
+			}
 		}
-		else if(elem.getValor() > this.ele.getValor()){//Se o elemento a ser removido for menor que o elemento atual;
-			//Então chamo o remover passando a sub-arvore da direita:
-			//Refaz a ligação da aresta
-			this.noDireito = this.noDireito.remover(elem);//remove o elemento e remonta a sub-arvore.
+		else if(elem.getValor() > this.ele.getValor()){
+			//Se o elemento a ser removido for maior que o elemento atual;
+			//Então seto o nó direito chamando o remover a partir da sub-arvore da direita:
+			if(this.noDireito != null){//Verifica se o nó direito não é nulo.
+				this.noDireito = this.noDireito.remover(elem);//Até chegar no nó a remover.
+			}
+			else{//Caso seja nulo é porque o elemento a ser removido não existe na árvore (porque ele deveria estar neste lugar nulo).
+				System.out.println("\n--> O elemento " + elem.getValor() + " não existe na árvore! Impossível remover!");
+				return this;
+			}
 		}
-		return this;
+		return this;//retorno o objeto.
 	}
 	//----------------------------------------------------------------------------
 }
