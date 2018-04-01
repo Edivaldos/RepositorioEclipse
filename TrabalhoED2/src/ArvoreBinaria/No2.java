@@ -9,12 +9,12 @@ import java.util.Objects;
  *
  * @author borges.esb
  */
-public class No {
+public class No2 {
 
     //atributos
     Integer numero;
-    No noEsquerdo;
-    No noDireito;
+    No2 noEsquerdo;
+    No2 noDireito;
 
     //Métodos Getters e Setters
     public Integer getNumero() {
@@ -25,44 +25,44 @@ public class No {
         this.numero = numero;
     }
 
-    public No getNoEsquerdo() {
+    public No2 getNoEsquerdo() {
         return noEsquerdo;
     }
 
-    public void setNoEsquerdo(No noEsquerdo) {
+    public void setNoEsquerdo(No2 noEsquerdo) {
         this.noEsquerdo = noEsquerdo;
     }
 
-    public No getNoDireito() {
+    public No2 getNoDireito() {
         return noDireito;
     }
 
-    public void setNoDireito(No noDireito) {
+    public void setNoDireito(No2 noDireito) {
         this.noDireito = noDireito;
     }
 
     //Construtor do nó
-    public No(Integer numero) {
+    public No2(Integer numero) {
         this.numero = numero;
     }
 
     //Construtor da classe
-    public No() {
+    public No2() {
     }
 
     //raiz da árvore
-    private No raiz;
+    private No2 raiz;
 
     //--------------------Inserção----------------------------------------------------------------------------------------------------------------------------//
     public void inserir(Integer numero) {
         inserir(raiz, numero);
     }
 
-    public void inserir(No node, Integer numero) {
+    public void inserir(No2 node, Integer numero) {
         System.out.println("traz o elemento e verifica raiz!");
 
         if (this.verificaRaiz()) {//verifica se a raiz é nula
-            raiz = new No(numero);// se for, insere-se o node
+            raiz = new No2(numero);// se for, insere-se o node
 
             System.out.println("raiz é nula, então inseri a raiz: " + numero + "\n");
         } else {
@@ -73,7 +73,7 @@ public class No {
 
                 } else {//se ou quando não existir nó à direita, inserimos o número.
                     System.out.println("Não existe mais nó à direita, então inserimos o " + numero + " à direita de " + node.numero);
-                    node.noDireito = new No(numero);
+                    node.noDireito = new No2(numero);
                 }
             } else {
                 System.out.println("raiz não é nula; número é menor que o nó atual, então vamos para a esquerda da árvore"
@@ -84,7 +84,7 @@ public class No {
 
                 } else {//se ou quando não existir nó à esquerda, inserimos o número.
                     System.out.println("Não existe mais nó à esquerda, então inserimos o " + numero + " à esquerda do " + node.numero + "\n");
-                    node.noEsquerdo = new No(numero);
+                    node.noEsquerdo = new No2(numero);
                 }
             }
         }
@@ -100,7 +100,7 @@ public class No {
         imprimeOrdem(raiz);
     }
 
-    private void imprimeOrdem(No num) {
+    private void imprimeOrdem(No2 num) {
         if (this.temFilhoEsquerda2(num)) {
             imprimeOrdem(num.getNoEsquerdo());
 
@@ -121,7 +121,7 @@ public class No {
         imprimePreOrdem(raiz);
     }
 
-    private void imprimePreOrdem(No num) {
+    private void imprimePreOrdem(No2 num) {
         if (this.temFilhoEsquerda2(num)) {
             System.out.println("--> " + num.getNumero());
             imprimePreOrdem(num.getNoEsquerdo());
@@ -138,7 +138,7 @@ public class No {
         imprimePosOrdem(raiz);
     }
 
-    private void imprimePosOrdem(No num) {
+    private void imprimePosOrdem(No2 num) {
         if (this.temFilhoEsquerda2(num)) {
             imprimePosOrdem(num.getNoEsquerdo());
             imprimePosOrdem(num.getNoDireito());
@@ -181,17 +181,17 @@ public class No {
 
     //Métodos de verificação:
     //Verifica se tem filho à esquerda na hora da inserção.
-    private boolean temFilhoEsquerda(No node) {
+    private boolean temFilhoEsquerda(No2 node) {
         return node.noEsquerdo != null;
     }
 
     //Verifica se tem filho à esquerda na hora da impressão.
-    private boolean temFilhoEsquerda2(No node) {
+    private boolean temFilhoEsquerda2(No2 node) {
         return node != null;
     }
 
     //Verifica se tem filho à direita na hora da inserção.
-    private boolean temFilhoDireita(No node) {
+    private boolean temFilhoDireita(No2 node) {
         return node.noDireito != null;
     }
 

@@ -9,7 +9,7 @@ package ArvoreBinaria;
 public class Principal {
     public static void main(String[] args) {
     //Instancia a árvore:
-    No node = new No();
+    No2 node = new No2();
     //insere os nós:
     System.out.println("Início das inserções!\n");
     node.inserir(10);//o primeiro será a raiz
